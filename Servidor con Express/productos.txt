@@ -1,0 +1,20 @@
+[
+	{
+		"title": "Manzana",
+		"price": "20",
+		"thumbnail": "https://cdn4.iconfinder.com/data/icons/fruits-79/48/04-apple-256.png",
+		"id": 1
+	},
+	{
+		"title": "Naranja",
+		"price": "10",
+		"thumbnail": "https://cdn1.iconfinder.com/data/icons/food-3-11/128/food_Orange-Citrus-Juice-Fruit-2-256.png",
+		"id": 2
+	},
+	{
+		"title": "Pera",
+		"price": "5",
+		"thumbnail": "https://cdn3.iconfinder.com/data/icons/fruits-52/150/icon_fruit_pera-256.png",
+		"id": 3
+	}
+]
