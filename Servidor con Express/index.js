@@ -9,7 +9,7 @@ const contenedor1 = new Contenedor('./productos.txt');
 
 
 app.get('/', (req, res) => {
-    res.send('Hola mundo');
+    res.send('Hola! Visite la ruta /productos o la ruta /productoRandom');
 });
 
 app.get('/productos', (req, res) => {
