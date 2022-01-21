@@ -10,9 +10,9 @@ class Contenedor {
         try {
             const data = await fs.promises.readFile(this.archivo, 'utf-8');
             const parsedData = JSON.parse(data);
-            Object.id = parsedData.length + 1;
+            Object.id = parsedData.length == 0 ? 1 : parsedData[parsedData.length - 1].id + 1;
             parsedData.push(Object);
-            const stringifiedData = JSON.stringify(parsedData);
+            const stringifiedData = JSON.stringify(parsedData, null, '\t');
             await fs.promises.writeFile(this.archivo, stringifiedData);
             console.log(stringifiedData);
             return Object.id;
