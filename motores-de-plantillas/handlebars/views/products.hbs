@@ -1,0 +1,21 @@
+<h2>Productos</h2>
+{{#if thereAreProducts}}
+<table border="2">
+    <tr>
+        <th>Producto</th>
+        <th>Precio</th>
+        <th>Foto URL</th>
+    </tr>
+    {{#each products}}
+    <tr>
+        <td>{{this.title}}</td>
+        <td>{{this.price}}</td>
+        <td><img src="{{this.thumbnail}}" alt="{{this.title}}"></td>
+    </tr>
+    {{/each}}
+</table>
+{{else}}
+<h3>No hay productos</h3>
+{{/if}}
+<br>
+<button><a href="http://localhost:8080">Formulario</a></button>
