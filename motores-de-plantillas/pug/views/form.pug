@@ -1,0 +1,25 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Formulario 
+    body 
+        h1 Ingrese su producto
+        form(action="http://localhost:8080/productos", method="post")
+            input(name="title", type="text", placeholder="Producto", required)
+            br
+            br
+            input(name="price", type="text", placeholder="Precio", required)
+            br
+            br
+            input(name="thumbnail", type="text", placeholder="Foto URL", required)
+            br
+            br
+            input(type="submit", value="Send")
+
+        br
+
+        button
+            a(href="http://localhost:8080/productos") Ver productos

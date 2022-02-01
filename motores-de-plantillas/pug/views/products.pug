@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Products 
+    body 
+        h2 Productos
+        if thereAreProducts
+            table(border="2")
+                tr
+                    th Producto
+                    th Precio
+                    th Foto URL
+                each product in products 
+                    tr
+                        td #{product.title}
+                        td #{product.price}
+                        td 
+                            img(src=product.thumbnail alt=product.title)
+        else
+            h3 No hay productos
+        br
+        button
+            a(href="http://localhost:8080") Formulario
