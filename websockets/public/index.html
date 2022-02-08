@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación con WebSockets</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <section id="products-section">
+        <h1 class="title">Ingrese su producto</h1>
+        <form onsubmit="return sendProduct(event)">
+            <input id="title" name="title" type="text" placeholder="Producto" required>
+            <br>
+            <input id="price" name="price" type="text" placeholder="Precio" required>
+            <br>
+            <input id="thumbnail" name="thumbnail" type="text" placeholder="Foto URL" required>
+            <br>
+            <input type="submit" value="Send">
+        </form>
+        <br>
+        <div id="products"></div>    
+    </section>
+
+    <br>
+
+    <section id="messages-section">
+        <h2 class="title">Centro de mensajes</h2>
+        <form onsubmit="return sendMessage(event)">
+            <input id="author" type="email" placeholder="Inserte su mail aquí" required>
+            <br>
+            <input id="message" type="text" placeholder="Mensaje" required>
+            <br>
+            <input type="submit" value="Send">
+        </form>
+        <br>
+        <div id="messages"></div>
+    </section>
+    
+
+    <script src="js/main.js"></script>
+</body>
+</html>

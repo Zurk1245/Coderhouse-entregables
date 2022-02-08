@@ -1,0 +1,64 @@
+:root {
+    --primary: #0C1B33;
+    --secondary: #d10a18;
+    --tertiary: #ffe02f;
+    --quaternary: #C16200;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    color: var(--secondary);
+    background-color: var(--tertiary);
+    font-size: 1rem;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 1rem;
+}
+
+.title {
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+input {
+    width: 30vw;
+    height: 25px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: var(--primary);
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+}
+
+input:hover {
+    background-color: var(--secondary);
+    color: var(--tertiary);
+}
+
+table {
+    width: 30vw;
+    background-color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+td, th, tr {
+    background-color: var(--primary);
+    border: 2px solid var(--quaternary);
+    padding: 5px 10px;
+}
+
+#products, #messages {
+    max-width: 40vw;
+}
+
+@media screen and (max-width: 700px) {
+    * {
+        font-size: .6rem;
+    }
+}
+
