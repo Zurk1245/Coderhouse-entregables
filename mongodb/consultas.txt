@@ -1,0 +1,23 @@
+use ecommerce
+db.createCollection("mensajes")
+db.createCollection("productos")
+db.productos.insertMany([{nombre: "Computadora", precio: 120, foto: "https://cdn3.iconfinder.com/data/icons/education-science-vol-1-1/512/computer_education_information_school-128.png"}, {nombre: "Monitor", precio: 580, foto: "https://cdn3.iconfinder.com/data/icons/flat-icons-web/40/Monitor-128.png"}, {nombre: "Teclado", precio: 900, foto: "https://cdn3.iconfinder.com/data/icons/computer-technology-2/64/Keyboard-device-hardware-computer-technology-128.png"}, {nombre: "Guitarra", precio: 1280, foto: "https://cdn1.iconfinder.com/data/icons/scenarium-vol-12/128/012_031-128.png"}, {nombre: "Celular", precio: 1700, foto: "https://cdn2.iconfinder.com/data/icons/kitchen-appliances-computers-and-electronics/32/Appliances-06-128.png"}, {nombre: "Mesa", precio: 2300, foto: "https://cdn2.iconfinder.com/data/icons/icometric-furniture/256/Coffee-Table-128.png"}, {nombre: "Espada", precio: 2860, foto: "https://cdn3.iconfinder.com/data/icons/pirate-flat/340/pirate_blade_sword_ancient_saber_weapon_corsair-128.png"}, {nombre:  "Raqueta", precio: 3350, foto: "https://cdn4.iconfinder.com/data/icons/sport-fitness-vol-01/512/z2-tennis-racket-sport-128.png"}, {nombre: "Impresora", precio: 4320, foto: "https://cdn3.iconfinder.com/data/icons/object-emoji/50/Printer-128.png"}, {nombre: "Cama", precio: 4990, foto: "https://cdn0.iconfinder.com/data/icons/interior-design-filled-outline/340/bedroom_room_interior_home_bed_furniture_lamp_house_pillows-128.png"}])
+db.mensajes.insertMany([{autor: "mendez.mariano@outlook.com.ar", mensaje: "hola!", fecha: "21/2/2022"}, {autor: "mendez.mariano@outlook.com.ar", mensaje: "estamos probando la base de datos mongodb", fecha: "22/2/2022"},	{autor: "mendez.mariano@outlook.com.ar", mensaje: "javascript es el lenguaje de la web", fecha: "23/2/2022"},	{autor: "mendez.mariano@outlook.com.ar", mensaje: "lo más difícil es conseguir el primer trabajo", fecha: "24/2/2022"},	{autor: "mendez.mariano@outlook.com.ar", mensaje: "leer libros te hace aprender mucho", fecha: "25/2/2022"},	{autor: "mendez.mariano@outlook.com.ar", mensaje: "estaría piola tener 4 monitores", fecha: "26/2/2022"},	{autor: "mendez.mariano@outlook.com.ar", mensaje: "el tenis de mesa es genial", fecha: "27/2/2022"},	{autor: "mendez.mariano@outlook.com.ar", mensaje: "un día voy a ser ingeniero de software", fecha: "28/2/2022"}, {autor: "mendez.mariano@outlook.com.ar", mensaje: "gracias por charlar", fecha: "29/2/2022"}, {autor: "mendez.mariano@outlook.com.ar", mensaje: "chau!", fecha: "29/2/2022"}])
+db.productos.find().pretty()
+db.mensajes.find().pretty()
+db.productos.estimatedDocumentCount()
+db.mensajes.estimatedDocumentCount()
+db.productos.insert({nombre: "Silla", precio: 4000, foto: "https://cdn2.iconfinder.com/data/icons/icometric-furniture/256/Office-Chair-128.png"})
+db.productos.find({precio: { $lt: 1000} }).pretty()
+db.productos.find({$and: [ {precio: {$gte: 1000} } , {precio: {$lte: 3000} } ] }).pretty()
+db.productos.find({precio: { $gt: 3000 } }).pretty()
+db.productos.find({}, {nombre: 1, _id: 0}).skip(2).limit(1).sort({precio: 1}).pretty()
+db.productos.updateMany({}, {$set: { stock: 100 } })
+db.productos.updateMany({precio: {$gt: 4000} }, {$set: {stock: 0} })
+db.productos.deleteMany({precio: {$lt: 1000} })
+use admin
+db.createUser({user: "pepe", pwd: "asd456", roles: [{role: "read", db: "ecommerce"}] })
+db.auth("pepe", "asd456")
+use ecommerce
+db.productos.find().pretty()
+db.productos.insertOne({nombre: "asd"})
