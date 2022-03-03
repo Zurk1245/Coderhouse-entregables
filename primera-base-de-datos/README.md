@@ -1,4 +1,4 @@
-# Consideraciones para probrar la funcionalidad
+# Consideraciones para probar la funcionalidad
 - Usar XAMPP con Apache y MySQL
 - Correr el script npm start
 - A veces ocurre que se actualiza al enviar un producto o mensaje al segundo intento consecutivo
