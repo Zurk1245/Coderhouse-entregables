@@ -1,6 +1,7 @@
 const express = require("express");
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
+const util = require("util");
 const productAPI = require("./contenedores/productos");
 const { ProductManagement } = productAPI;
 const ContenedorDeMensajes = require("./contenedores/mensajes");
@@ -16,6 +17,8 @@ const PORT = 8080;
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
+
+const { schema, normalize } = require("normalizr");
 
 
 const contenedorDeProductos = new ProductManagement();
@@ -38,6 +41,8 @@ app.use("/api/productos-test", productosRouter);
 
 app.use(express.static("public"));
 
+//SOCKET.IO
+
 io.on("connection", async socket => {
     console.log("Nuevo cliente conectado!");
 
@@ -49,13 +54,22 @@ io.on("connection", async socket => {
         io.sockets.emit("products", productos); 
     })
 
-    socket.emit("messages", await mensajesDao.getAll());
+    const mensajes = await mensajesDao.getAll();
+    const schemaAuthor = new schema.Entity('author', {}, { idAttribute: 'email' });
+    const schemaMensaje = new schema.Entity('mensaje', { author: schemaAuthor }, { idAttribute: '_id' })
+    const schemaMensajes = new schema.Entity('mensajes', { authors: [schemaAuthor], mensajes: [schemaMensaje] }, { idAttribute: '_id' })
+    const normalizedMessages = normalize({ id: "mensajes", mensajes }, schemaMensajes);
+
+    const normalizedLength = util.inspect(normalizedMessages,true,7,true).length;
+    socket.emit("messages", normalizedMessages.entities, normalizedLength);
 
     socket.on("newMessage", async message => {
         const mensajeGuardado = await mensajesDao.save(message);
         console.log(mensajeGuardado);
         const mensajes =  await mensajesDao.getAll();
-        io.sockets.emit("messages", mensajes);
+        const normalizedMessages = normalize({ id: "mensajes", mensajes }, schemaMensajes);
+        const normalizedLength = util.inspect(normalizedMessages,true,7,true).length;
+        io.sockets.emit("messages", normalizedMessages.entities, normalizedLength);
     });
 
 });

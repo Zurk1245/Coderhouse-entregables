@@ -56,22 +56,30 @@ function sendMessage(e) {
         },
         mensaje: mensaje.value
     }
-    console.log(newMessage);
     socket.emit("newMessage", newMessage);
     mensaje.value = "";
 }
 
-function displayMessages(messages) {
-    const messagesTitle = `<h2 class="title">Mensajes</h2>`;
-    const html = messages.map(message => {
+function displayMessages(messages, compr) {
+    const messagesTitle = `<h4 class="title">Mensajes - Compresión: ${compr}%</h4>`;
+    const html = Object.values(messages).map(message => {
         return(`<div style="margin: 5px;">
-            <span style="font-size: 1.3rem; color: blue; font-weight: bold;">${message.autor.id}</span>
-            <span style="font-size: 1.3rem; color: brown;">${message.autor.alias}</span>:
-            <i style="font-size: 1.3rem; color: green;">${message.mensaje}</i> </div>`)
+            <span style="font-size: 1.3rem; color: blue; font-weight: bold;">${message._doc.autor.id}</span>
+            <span style="font-size: 1.3rem; color: brown;">${message._doc.autor.alias}</span>
+            <i style="font-size: 1.3rem; color: green;">${message._doc.autor.apellido}</i>
+            <span style="font-size: 1.3rem; color: purple; font-weight: bold;">${message._doc.autor.avatar}</span>:
+            <i style="font-size: 1.3rem; color: white;">${message._doc.mensaje}</i> </div>`)
     }).join(" ");
     document.getElementById('messages').innerHTML = messagesTitle.concat(html);
 }
 
-socket.on("messages", messages => {
-    displayMessages(messages);
+socket.on("messages", (messages, normalizedLength) => {
+    const schemaAuthor = new normalizr.schema.Entity('author', {}, { idAttribute: 'email' });
+    const schemaMensaje = new normalizr.schema.Entity('mensaje', { author: schemaAuthor }, { idAttribute: '_id' })
+    const schemaMensajes = new normalizr.schema.Entity('mensajes', { mensajes: [schemaMensaje] }, { idAttribute: '_id' })
+    const denormalizedMessages = normalizr.denormalize(messages, schemaMensajes);
+    
+    const denormalizedLength = JSON.stringify(denormalizedMessages).length;
+    const compr = Math.round((1 - denormalizedLength / normalizedLength) * 100);
+    displayMessages(denormalizedMessages.mensaje, compr);
 });
