@@ -1,5 +1,4 @@
 # Consideraciones
-- A veces ocurre que se actualiza al enviar un producto al segundo intento consecutivo
-- La consigna 1 está completa
-- Hice el cambio de persistencia de mensajes desde mariadb a mongodb para el nuevo formato
-- Falta la parte de normalizr que no llegué a realizar por temas de tiempo y porque no me terminó de quedar claro que hay que hacer
+- Para correr el proyecto escribir el comando npm start y usar xampp para que no hayan errores de bases de datos locales (mariadb para los productos)
+- Las consignas 1 y 2 están completas
+- Hice el cambio de persistencia de mensajes desde sqlite a mongodb para el nuevo formato
