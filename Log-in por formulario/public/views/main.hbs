@@ -1,0 +1,43 @@
+<section id="welcome">
+    <h1 class="main-title">Bienvenido, {{usuario}}</h1>
+    <button id="logout">Desloguear</button>
+</section>
+<section id="products-section">
+        <h1 class="title">Ingrese su producto</h1>
+        <form onsubmit="sendProduct(event)">
+            <input id="nombre" name="nombre" type="text" placeholder="Producto" required>
+            <br>
+            <input id="precio" name="precio" type="text" placeholder="Precio" required>
+            <br>
+            <input id="foto" name="foto" type="text" placeholder="Foto URL" required>
+            <br>
+            <input type="submit" value="Send">
+        </form>
+        <br>
+        <div id="products"></div>    
+    </section>
+
+    <br>
+
+    <section id="messages-section">
+        <h2 class="title">Centro de mensajes</h2>
+        <form onsubmit="sendMessage(event)">
+            <input id="id" type="email" placeholder="Inserte su mail aquí" required>
+            <br>
+            <input id="nombre" type="text" placeholder="Inserte su nombre aquí" required>
+            <br>
+            <input id="apellido" type="text" placeholder="Inserte su apellido aquí" required>
+            <br>
+            <input id="edad" type="number" placeholder="Inserte su edad aquí" required>
+            <br>
+            <input id="alias" type="text" placeholder="Inserte su alias aquí" required>
+            <br>
+            <input id="avatar" type="text" placeholder="Inserte su avatar aquí" required>
+            <br>
+            <input id="mensaje" type="text" placeholder="Mensaje" required>
+            <br>
+            <input type="submit" value="Send">
+        </form>
+        <br>
+        <div id="messages"></div>
+    </section>
