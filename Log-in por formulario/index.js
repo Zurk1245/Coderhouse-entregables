@@ -3,13 +3,10 @@ const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 const util = require("util");
 const { schema, normalize } = require("normalizr");
+const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
-const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://mariano:mariano@cluster0.z4zz9.mongodb.net/entregables?retryWrites=true&w=majority").then(res => {
-    console.log("connected to mongodb");
-});
 
 const productAPI = require("./contenedores/productos");
 const { ProductManagement } = productAPI;
@@ -36,6 +33,7 @@ app.engine("hbs", hbs.engine({
 app.set("view engine", "hbs")
 app.set("views", "./public/views");
 app.use("/api/productos-test", productosTestRouter);
+app.use(cookieParser());
 app.use(
     session({
         store: MongoStore.create({
@@ -44,7 +42,11 @@ app.use(
         }),
         secret: "key",
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: {
+            secure: "auto",
+            maxAge: 60000
+        }
     })
 )
 
@@ -52,7 +54,6 @@ function isLogged(req, res, next) {
     if (req.session.isLogged) {
         return next();
     } else {
-        console.log("asd");
         return res.redirect("/login");
     }
 
@@ -64,11 +65,20 @@ app.get("/", isLogged, (req, res) => {
 
 app.get("/login", (req, res) => {
     res.render("login");
-})
+});
+
+app.post("/login", (req, res) => {
+    const user = req.session.usuario;
+    req.session.destroy(err => {
+        if(!err) res.render("logout", { usuario: user });
+        else res.send({status: 'Logout ERROR', body: err});
+    });
+});
 
 app.post("/home", (req, res, next) => {
     req.session.isLogged = true;
-    req.session.usuario = req.body.usuario
+    req.session.usuario = req.body.usuario;
+    console.log(req.session.usuario);
     res.redirect("/home");
 });
 
@@ -111,7 +121,6 @@ io.on("connection", async socket => {
         const normalizedLength = util.inspect(normalizedMessages,true,7,true).length;
         io.sockets.emit("messages", normalizedMessages.entities, normalizedLength);
     });
-
 });
 
 const connectedServer = httpServer.listen(PORT, () => {

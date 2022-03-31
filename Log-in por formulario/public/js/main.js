@@ -83,9 +83,3 @@ socket.on("messages", (messages, normalizedLength) => {
     const compr = Math.round((1 - denormalizedLength / normalizedLength) * 100);
     displayMessages(denormalizedMessages.mensaje, compr);
 });
-
-// LOG OUT
-const logOutButton = document.getElementById("logout");
-logOutButton.addEventListener("click", () => {
-    console.log("Deslogueando...");
-})
