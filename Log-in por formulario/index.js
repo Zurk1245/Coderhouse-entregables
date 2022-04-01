@@ -45,10 +45,15 @@ app.use(
         saveUninitialized: false,
         cookie: {
             secure: "auto",
-            maxAge: 60000
+            maxAge: 1000 * 60
         }
     })
-)
+);
+app.use(function(req, res, next) {
+    req.session._garbage = Date();
+    req.session.touch();
+    next();
+});
 
 function isLogged(req, res, next) {
     if (req.session.isLogged) {
@@ -56,7 +61,6 @@ function isLogged(req, res, next) {
     } else {
         return res.redirect("/login");
     }
-
 }
 
 app.get("/", isLogged, (req, res) => {
@@ -67,24 +71,24 @@ app.get("/login", (req, res) => {
     res.render("login");
 });
 
-app.post("/login", (req, res) => {
+app.post("/logout", (req, res) => {
     const user = req.session.usuario;
     req.session.destroy(err => {
-        if(!err) res.render("logout", { usuario: user });
+        if(!err) {
+            res.render("logout", { usuario: user });
+        } 
         else res.send({status: 'Logout ERROR', body: err});
     });
 });
 
-app.post("/home", (req, res, next) => {
+app.post("/home", (req, res) => {
     req.session.isLogged = true;
     req.session.usuario = req.body.usuario;
-    console.log(req.session.usuario);
     res.redirect("/home");
 });
 
 const homeRouter = express.Router();
 app.use("/home", homeRouter);
-
 homeRouter.use(express.static(__dirname + "/public"));
 
 homeRouter.get("/", isLogged, (req, res) => {
