@@ -4,7 +4,7 @@ const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 const util = require("util");
 const { schema, normalize } = require("normalizr");
-//const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 //const MongoStore = require("connect-mongo");
 //const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const mongoose = require("mongoose");
@@ -20,13 +20,16 @@ const mensajesDao = new ContenedorMongoDB(config.mongodbRemote);
 const hbs = require("express-handlebars");
 const productosTestRouter = require("./routes/productos-test");
 const UsuarioModel = require("./contenedores/contenedor-mongodb/models/usuario-model");
-const PORT = 8080;
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
 const contenedorDeProductos = new ProductManagement();
 contenedorDeProductos.createProductsTableInDataBase(); 
+
+const MONGO_URL = config.mongodbRemote.cnxStr;
+
+//mongoose.connect(MONGO_URL);
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
@@ -41,27 +44,32 @@ app.set("views", "./public/views");
 app.use("/api/productos-test", productosTestRouter);
 /*----------- Passport -----------*/
 passport.use("login", new LocalStrategy(async (username, password, done) => {
-    await mongoose.connect(config.mongodbRemote.cnxStr);
+    try {
+        await mongoose.connect(MONGO_URL);
+    } catch (error) {
+        console.log(error);        
+    }
     UsuarioModel.findOne({ username }, (err, user) => {
         if (err) {
             return done(err);
         }
-
         if (!user) {
             console.log(`Usuario no encontrado con el username ${username}`);
             return done(null, false);
         }
-
         if (!isValidPassword(user, password)) {
             console.log("Contraseña invalida");
             return done(null, false);
         }
-
         return done(null, user);
     })
 }));
 passport.use("registro", new LocalStrategy({passReqToCallback: true}, async (req, username, password, done) => {
-    await mongoose.connect(config.mongodbRemote.cnxStr);
+    try {
+        await mongoose.connect(MONGO_URL);
+    } catch (error) {
+        console.log(error);        
+    }
     UsuarioModel.findOne({ username }, (err, user) => {
         if (err) {
             console.log(`Error en el registro: ${err}`);
@@ -90,15 +98,15 @@ passport.serializeUser((user, done) => {
     done(null, user._id);
 });
 passport.deserializeUser((id, done) => {
-    UsuarioModel.findById(id, done);
+        UsuarioModel.findById(id, done);
 })
 
 /*----------- Session -----------*/
 
-//app.use(cookieParser());
+app.use(cookieParser());
 app.use(session({
         /*store: MongoStore.create({
-            mongoUrl: "mongodb+srv://mariano:mariano@cluster0.z4zz9.mongodb.net/entregables?retryWrites=true&w=majority",
+            mongoUrl: MONGO_URL,
             mongoOptions: advancedOptions
         }),*/
         secret: "keyboard cat",
@@ -107,7 +115,7 @@ app.use(session({
         cookie: {
             httpOnly: false,
             secure: false,
-            maxAge: 100000 * 60
+            maxAge: 1000 * 60 * 10
         },
         rolling: true,
         resave: true,
@@ -115,11 +123,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-/*app.use(function(req, res, next) {
-    req.session._garbage = Date();
-    req.session.touch();
-    next();
-});*/
 
 function createHash(password) {
     return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
@@ -146,9 +149,7 @@ app.get("/login", (req, res) => {
     res.render("login");
 });
 app.post("/login", passport.authenticate("login", { failureRedirect: "/login/error" }), (req, res) => {
-    //const user = req.user;
     res.redirect("/home");
-    //res.render("main", { username: user.username });
 });
 app.get("/login/error", (req, res) => {
     res.render("error-login");
@@ -159,38 +160,30 @@ app.get("/registro", (req, res) => {
     res.render("registro");
 });
 app.post("/registro", passport.authenticate("registro", { failureRedirect: "/login/error" }), (req, res) => {
-    //const user = req.user;
     res.redirect("/home");
-    //res.render("main", { user });
 });
 app.get("/registro/error", (req, res) => {
     res.render("error-register");
 });
 
 // LOGOUT
-app.post("/logout", (req, res) => {
-    const user = req.session.usuario;
-    req.session.destroy(err => {
-        if(!err) {
-            res.render("logout", { usuario: user });
-        } 
-        else res.send({status: 'Logout ERROR', body: err});
-    });
-});
-
-// HOME
-app.post("/home", (req, res) => {
-    req.session.isLogged = true;
-    req.session.usuario = req.body.usuario;
-    res.redirect("/home");
+app.post("/logout", async (req, res) => {
+    req.logOut();
+    res.render("logout", { username: req.user.username });
 });
 
 const homeRouter = express.Router();
 app.use("/home", homeRouter);
 homeRouter.use(express.static(__dirname + "/public"));
 
-homeRouter.get("/", isLogged, (req, res) => {
-    res.render("main", { username: req.user.username});
+homeRouter.get("/", isLogged, async (req, res) => {
+    try {
+        await mongoose.connect(MONGO_URL);
+        console.log(req.session)
+        res.render("main", { username: req.user.username});   
+    } catch (error) {
+        console.log(`Error en home: ${error}`);
+    }
 })
 
 // FAIL ROUTE
@@ -201,8 +194,6 @@ app.get("*", (req, res) => {
 /*============================[SOCKET.IO]============================*/
 
 io.on("connection", async (socket) => {
-    //await mongoose.connect(config.mongodbRemote.cnxStr);
-    //if (err) console.log(err);
     console.log("Nuevo cliente conectado!");
 
     socket.emit("products", await contenedorDeProductos.getAll());
@@ -233,7 +224,7 @@ io.on("connection", async (socket) => {
 });
 
 /*============================[Servidor]============================*/
-//const PORT = 8080;
+const PORT = 8080;
 const connectedServer = httpServer.listen(PORT, () => {
     console.log(`Server listening on port ${connectedServer.address().port}`);
 });
