@@ -17,11 +17,11 @@ class ContenedorMongoDB {
             return result;
         } catch (error) {
             console.error(`Error: ${error}`);
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 
     async getAll() {
@@ -31,11 +31,11 @@ class ContenedorMongoDB {
             return mensajes;
         } catch (error) {
             console.error(`Error: ${error}`);
-        } finally {
+        } /*finally {
             mongoose.disconnect().catch((error) => {
                 console.error(error);
             })
-        }
+        }*/
     }
 }
 

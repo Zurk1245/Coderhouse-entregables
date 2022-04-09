@@ -22,7 +22,7 @@ class ProductManagement {
               console.log("Table productos creada!");
             }) 
             .catch(err => {
-              console.log(err); 
+              console.log(err);
               throw err;
             })
             .finally(() => {
