@@ -3,7 +3,10 @@ const express = require("express");
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 const cookieParser = require("cookie-parser");
-//const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+const MongoStore = require("connect-mongo");
+const config = require("./src/config");
+const MONGO_URL = config.mongodbRemote.cnxStr;
+const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const passport = require('passport');
 const UsuarioModel = require("./contenedores/contenedor-mongodb/models/usuario-model");
 const session = require('express-session');
@@ -30,10 +33,10 @@ app.use("/api/productos-test", productosTestRouter);
 /*----------- Session -----------*/
 app.use(cookieParser());
 app.use(session({
-        /*store: MongoStore.create({
+        store: MongoStore.create({
             mongoUrl: MONGO_URL,
             mongoOptions: advancedOptions
-        }),*/
+        }),
         secret: "keyboard cat",
         saveUninitialized: false,
         cookie: {
@@ -81,7 +84,6 @@ const { schema, normalize } = require("normalizr");
 const productAPI = require("./contenedores/productos");
 const { ProductManagement } = productAPI;
 const ContenedorMongoDB = require("./contenedores/contenedor-mongodb/mongodb-mesajes");
-const config = require("./src/config");
 const mensajesDao = new ContenedorMongoDB(config.mongodbRemote);
 
 const contenedorDeProductos = new ProductManagement();
