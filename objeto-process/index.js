@@ -79,6 +79,8 @@ const homeRouter = require("./src/routes/home");
 app.use("/home", homeRouter);
 const infoRouter = require("./src/routes/info");
 app.use("/info", infoRouter);
+const apiRandomRouter = require("./src/routes/api-randoms");
+app.use("/api/randoms", apiRandomRouter);
 
 // FAIL ROUTE
 app.get("*", (req, res) => {
