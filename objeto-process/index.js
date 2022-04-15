@@ -20,7 +20,6 @@ const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 const PORT = args.port;
-//console.log(args);
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
@@ -88,39 +87,8 @@ app.get("*", (req, res) => {
 });
 
 /*============================[SOCKET.IO]============================*/
-const util = require("util");
-const { schema, normalize } = require("normalizr");
-const productAPI = require("./contenedores/productos");
-const { ProductManagement } = productAPI;
-const ContenedorMongoDB = require("./contenedores/contenedor-mongodb/mongodb-mesajes");
-const mensajesDao = new ContenedorMongoDB(config.mongodbRemote);
-
-const contenedorDeProductos = new ProductManagement();
-contenedorDeProductos.createProductsTableInDataBase(); 
-
-io.on("connection", async (socket) => {
-    console.log("Nuevo cliente conectado!");
-    socket.emit("products", await contenedorDeProductos.getAll());
-    socket.on("newProduct", async product => {
-        contenedorDeProductos.save(product);
-        const productos = await contenedorDeProductos.getAll();
-        io.sockets.emit("products", productos); 
-    })
-    const mensajes = await mensajesDao.getAll();
-    const schemaAuthor = new schema.Entity('author', {}, { idAttribute: 'email' });
-    const schemaMensaje = new schema.Entity('mensaje', { author: schemaAuthor }, { idAttribute: '_id' })
-    const schemaMensajes = new schema.Entity('mensajes', { authors: [schemaAuthor], mensajes: [schemaMensaje] }, { idAttribute: '_id' })
-    const normalizedMessages = normalize({ id: "mensajes", mensajes }, schemaMensajes);
-    const normalizedLength = util.inspect(normalizedMessages,true,7,true).length;
-    socket.emit("messages", normalizedMessages.entities, normalizedLength);
-    socket.on("newMessage", async message => {
-        const mensajeGuardado = await mensajesDao.save(message);
-        console.log(mensajeGuardado);
-        const mensajes =  await mensajesDao.getAll();
-        const normalizedMessages = normalize({ id: "mensajes", mensajes }, schemaMensajes);
-        const normalizedLength = util.inspect(normalizedMessages,true,7,true).length;
-        io.sockets.emit("messages", normalizedMessages.entities, normalizedLength);
-    });
+io.on("connection", socket => {
+    require("./src/web-sockets")(socket);
 });
 
 /*============================[Servidor]============================*/
@@ -128,3 +96,5 @@ const connectedServer = httpServer.listen(PORT, () => {
     console.log(`Server listening on port ${connectedServer.address().port}`);
 });
 connectedServer.on("error", error => console.log(`Error: ${error}`));
+
+module.exports = { io };
