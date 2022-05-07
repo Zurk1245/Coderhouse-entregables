@@ -22,3 +22,4 @@ function run(url) {
 console.log("Running autocannon test");
 
 run("http://localhost:8080/info");
+run("http://localhost:8080/info/debug");
