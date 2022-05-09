@@ -1,0 +1,16 @@
+<h1 class="main-title" style="margin-top: 50px;">Números aleatorios del 1 al 1000 y la cantidad de veces que salieron. PID: {{process_id}}</h1>
+<form action="http://localhost:8080/api/randoms" method="post">
+    <button class="nav-button" type="submit">Apretame para ver si está bloqueado el navegador!</button>
+</form>
+<table border="20">
+    <tr>
+        <th>Número</th>
+        <th>Cantidad</th>
+    </tr>
+    {{#each randomNumbers}}
+        <tr style="font-size: 2rem;">
+            <td>{{this.numero}}</td>
+            <td>{{this.cantidad}}</td>
+        </tr>
+    {{/each}}
+    </table>
