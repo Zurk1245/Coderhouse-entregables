@@ -20,14 +20,18 @@ const args = parseArgs(process.argv, options);
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
-const PORT = args.port;
+const PORT = process.env.PORT || 8080;
 const cluster = require("cluster");
 const numCPUs = require("os").cpus().length;
 const logger = require("./src/logger");
+const cors = require("cors");
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors({
+    origin: '*'
+}));
 
 /*----------- Motor de plantillas -----------*/
 app.engine("hbs", hbs.engine({
@@ -65,14 +69,14 @@ passport.use("registro", registroStrategy);
 passport.serializeUser((user, done) => {
     done(null, user._id);
 });
-passport.deserializeUser(async (id, done) => {
-    UsuarioModel.findById(id, done);
-    /*try {
-        await mongoose.connect(this.config.cnxStr);
-        UsuarioModel.findById(id, done);
+passport.deserializeUser((id, done) => {
+    try {
+        const usuario = UsuarioModel.findById(id);
+        done(null, usuario);    
     } catch (error) {
-        console.error(`Error: ${error}`);
-    }*/
+        console.log(error)
+    }
+    
 });
 
 /*----------- Logger -----------*/
@@ -104,6 +108,7 @@ app.get("*", (req, res) => {
 });
 
 /*============================[SOCKET.IO]============================*/
+//io.set("origins", "*:*");
 io.on("connection", socket => {
     require("./src/web-sockets")(socket);
 });

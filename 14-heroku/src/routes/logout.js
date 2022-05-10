@@ -3,8 +3,8 @@ const logout = express.Router();
 
 /*============================[Routes]============================*/
 // LOGOUT
-logout.post("/", async (req, res) => {
-    res.render("logout", { username: req.user.username });
+logout.post("/", (req, res) => {
+    res.render("logout", { username: req.body.username });
     req.logOut();
 });
 

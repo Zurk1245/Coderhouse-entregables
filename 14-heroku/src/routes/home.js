@@ -10,7 +10,13 @@ homeRouter.use(express.static("C:/Users/maria/OneDrive/Escritorio/Coderhouse-ent
 homeRouter.get("/", isLogged, async (req, res) => {
     try {
         await mongoose.connect(MONGO_URL);
-        res.render("main", { username: req.user.username});   
+        let url;
+        if (req.headers.host.includes("localhost")) {
+            url = "http://localhost:8080";
+        } else {
+            url = "http://entregable-coder.herokuapp.com";
+        }
+        res.render("main", { username: req.query.username, url});   
     } catch (error) {
         console.log(`Error en home: ${error}`);
     }

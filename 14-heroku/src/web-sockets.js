@@ -6,17 +6,17 @@ const { ProductManagement } = require("../contenedores/productos");
 const ContenedorMongoDB = require("../contenedores/contenedor-mongodb/mongodb-mesajes");
 const mensajesDao = new ContenedorMongoDB(config.mongodbRemote);
 
-const contenedorDeProductos = new ProductManagement();
-contenedorDeProductos.createProductsTableInDataBase(); 
+//const contenedorDeProductos = new ProductManagement();
+//contenedorDeProductos.createProductsTableInDataBase(); 
 
 module.exports = async function(socket) {
     console.log("Nuevo cliente conectado!");
-    socket.emit("products", await contenedorDeProductos.getAll());
+    /*socket.emit("products", await contenedorDeProductos.getAll());
     socket.on("newProduct", async product => {
         contenedorDeProductos.save(product);
         const productos = await contenedorDeProductos.getAll();
         io.sockets.emit("products", productos); 
-    })
+    })*/
     const mensajes = await mensajesDao.getAll();
     const schemaAuthor = new schema.Entity('author', {}, { idAttribute: 'email' });
     const schemaMensaje = new schema.Entity('mensaje', { author: schemaAuthor }, { idAttribute: '_id' })

@@ -5,10 +5,16 @@ const login = express.Router();
 /*============================[Routes]============================*/
 // LOGIN
 login.get("/", (req, res) => {
-    res.render("login");
+    let url;
+    if (req.headers.host.includes("localhost")) {
+        url = "http://localhost:8080";
+    } else {
+        url = "http://entregable-coder.herokuapp.com";
+    }
+    res.render("login", { url });
 });
 login.post("/", passport.authenticate("login", { failureRedirect: "/login/error" }), (req, res) => {
-    res.redirect("/home");
+    res.redirect(`/home?username=${req.body.username}`);
 });
 login.get("/error", (req, res) => {
     res.render("error-login");
