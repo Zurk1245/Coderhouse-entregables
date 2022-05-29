@@ -1,7 +1,7 @@
 const { io } = require("../../index");
 const util = require("util");
 const { schema, normalize } = require("normalizr");
-const config = require("./config");
+const config = require("../config/config");
 const { ProductManagement } = require("../persistencia/contenedores/productos-mariadb");
 const ContenedorMongoDB = require("../persistencia/contenedores/contenedor-mongodb/mongodb-mesajes");
 const mensajesDao = new ContenedorMongoDB(config.mongodbRemote);

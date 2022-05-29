@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const MensajeModel = require('./models/mensaje-model');
-const logger = require("../../../controlador/logger");
+const logger = require("../../../config/logger");
 
 class ContenedorMongoDB {
 

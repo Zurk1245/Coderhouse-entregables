@@ -1,8 +1,8 @@
 const express = require("express");
 const homeRouter = express.Router();
 const mongoose = require("mongoose");
-const { isLogged } = require("../controlador/middleware-functions");
-const config = require("../logica-negocio/config");
+const { isLogged } = require("../middlewares/middleware-functions");
+const config = require("../config/config");
 const MONGO_URL = config.mongodbRemote.cnxStr;
 
 homeRouter.use(express.static("C:/Users/maria/OneDrive/Escritorio/Coderhouse-entregables/inicio-de-sesion/public"));

@@ -1,7 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy;
-const config = require("../logica-negocio/config");
+const config = require("../config/config");
 const MONGO_URL = config.mongodbRemote.cnxStr;
-const { createHash, isValidPassword } = require("./middleware-functions");
+const { createHash, isValidPassword } = require("../middlewares/middleware-functions");
 const mongoose = require("mongoose");
 const UsuarioModel = require("../persistencia/contenedores/contenedor-mongodb/models/usuario-model");
 

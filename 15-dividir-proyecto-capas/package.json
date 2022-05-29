@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "node ./src/autocannon-test.js"
+    "test": "node ./src/test/autocannon-test.js"
   },
   "keywords": [],
   "author": "",

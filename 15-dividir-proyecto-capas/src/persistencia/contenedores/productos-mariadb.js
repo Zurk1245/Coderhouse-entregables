@@ -1,8 +1,8 @@
 const { getDataFromMariaDB } = require("../CRUD/get_data");
 const { insertDataForMariaDB } = require("../CRUD/insert_data");
-const { mariaDBOptions } = require("../options/mariaDB");
+const { mariaDBOptions } = require("../../config/mariaDB");
 const knex = require("knex")(mariaDBOptions);
-const logger = require("../../controlador/logger");
+const logger = require("../../config/logger");
 
 class ProductManagement {
     constructor() {

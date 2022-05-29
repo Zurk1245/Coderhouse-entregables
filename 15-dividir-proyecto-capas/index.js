@@ -4,7 +4,7 @@ const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 const cookieParser = require("cookie-parser");
 const MongoStore = require("connect-mongo");
-const config = require("./src/logica-negocio/config");
+const config = require("./src/config/config");
 const MONGO_URL = config.mongodbRemote.cnxStr;
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const passport = require('passport');
@@ -12,8 +12,8 @@ const mongoose = require("mongoose");
 const UsuarioModel = require("./src/persistencia/contenedores/contenedor-mongodb/models/usuario-model");
 const session = require('express-session');
 const hbs = require("express-handlebars");
-const productosTestRouter = require("./src/ruteo/productos-test");
-const { loginStrategy, registroStrategy } = require("./src/controlador/passport-strategies");
+const productosTestRouter = require("./src/routes/productos-test");
+const { loginStrategy, registroStrategy } = require("./src/services/passport-strategies");
 const parseArgs = require("minimist");
 const options = { default: { port: 8080, modo: "FORK" } };
 const args = parseArgs(process.argv, options);
@@ -23,7 +23,7 @@ const io = new IOServer(httpServer);
 const PORT = args.port;
 const cluster = require("cluster");
 const numCPUs = require("os").cpus().length;
-const logger = require("./src/controlador/logger");
+const logger = require("./src/config/logger");
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
@@ -35,7 +35,7 @@ app.engine("hbs", hbs.engine({
     defaultLayout: "index.hbs",
 }));
 app.set("view engine", "hbs")
-app.set("views", "./public/views");
+app.set("views", "./src/views");
 app.use("/api/productos-test", productosTestRouter);
 
 /*----------- Session -----------*/
@@ -82,19 +82,13 @@ app.use(function(req, res, next) {
 });
 
 /*============================[Routers]============================*/
-const indexRouter = require("./src/ruteo/index");
-app.use("/", indexRouter);
-const loginRouter = require("./src/ruteo/login");
-app.use("/login", loginRouter);
-const registroRouter = require("./src/ruteo/registro");
-app.use("/registro", registroRouter);
-const logoutRouter = require("./src/ruteo/logout");
-app.use("/logout", logoutRouter);
-const homeRouter = require("./src/ruteo/home");
+const authRouter = require("./src/routes/auth.routes");
+app.use("/", authRouter);
+const homeRouter = require("./src/routes/home");
 app.use("/home", homeRouter);
-const infoRouter = require("./src/ruteo/info");
+const infoRouter = require("./src/routes/info");
 app.use("/info", infoRouter);
-const apiRandomRouter = require("./src/ruteo/api-randoms");
+const apiRandomRouter = require("./src/routes/api-randoms");
 app.use("/api/randoms", apiRandomRouter);
 
 // FAIL ROUTE
@@ -105,7 +99,7 @@ app.get("*", (req, res) => {
 
 /*============================[SOCKET.IO]============================*/
 io.on("connection", socket => {
-    require("./src/logica-negocio/web-sockets")(socket);
+    require("./src/services/web-sockets")(socket);
 });
 
 logger.info(args.modo);

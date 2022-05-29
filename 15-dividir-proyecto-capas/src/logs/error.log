@@ -1,0 +1,2 @@
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
