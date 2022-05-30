@@ -1,0 +1,35 @@
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"level":"error"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_TABLE_EXISTS_ERROR","errno":1050,"index":0,"level":"error","sql":"create table `productos` (`id` int unsigned not null auto_increment primary key, `nombre` varchar(255) not null, `precio` int, `foto` varchar(255))","sqlMessage":"Table 'productos' already exists","sqlState":"42S01"}
+{"code":"ER_TABLE_EXISTS_ERROR","errno":1050,"index":0,"level":"error","sql":"create table `productos` (`id` int unsigned not null auto_increment primary key, `nombre` varchar(255) not null, `precio` int, `foto` varchar(255))","sqlMessage":"Table 'productos' already exists","sqlState":"42S01"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
+{"code":"ER_NO_SUCH_TABLE","errno":1146,"index":0,"level":"error","sql":"select * from `productos`","sqlMessage":"Table 'productos.productos' doesn't exist","sqlState":"42S02"}
