@@ -2,19 +2,19 @@ const socket = io.connect();
 
 function sendProduct(e) {
     e.preventDefault();
-    console.log("APRETADO!");
-    const nombre = document.getElementById("nombre");
-    const precio = document.getElementById("precio");
-    const foto = document.getElementById("foto");
-    const newProduct = {
+    let nombre = document.getElementById("nombre");
+    let precio = document.getElementById("precio");
+    let foto = document.getElementById("foto");
+    let newProduct = {
         nombre: nombre.value,
         precio: precio.value,
         foto: foto.value
     }
     socket.emit("newProduct", newProduct);
+    return;
 }
 
-function htmlTable(products) {
+async function htmlTable(products) {
     return fetch('./views/products-table.hbs')
         .then(result => result.text())
         .then(plantilla => {
@@ -24,10 +24,9 @@ function htmlTable(products) {
         })
 }
 
-socket.on("products", products => {
-    htmlTable(products).then(html => {
-        document.getElementById('products').innerHTML = html;
-    });
+socket.on("products", async products => {
+    const html = await htmlTable(products);
+    document.getElementById('products').innerHTML = html;
 });
 
 // !-- MESSAGES --!
@@ -61,6 +60,9 @@ function sendMessage(e) {
 }
 
 function displayMessages(messages, compr) {
+    if (!messages) {
+        return;
+    }
     const messagesTitle = `<h4 class="title">Mensajes - Compresión: ${compr}%</h4>`;
     const html = Object.values(messages).map(message => {
         return(`<div style="margin: 5px;">

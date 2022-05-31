@@ -9,7 +9,7 @@ const MONGO_URL = config.mongodbRemote.cnxStr;
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const passport = require('passport');
 const mongoose = require("mongoose");
-const UsuarioModel = require("./src/persistencia/contenedores/contenedor-mongodb/models/usuario-model");
+const UsuarioModel = require("./src/persistencia/DAOs/models/usuario-model");
 const session = require('express-session');
 const hbs = require("express-handlebars");
 const productosTestRouter = require("./src/routes/productos-test");
@@ -35,7 +35,7 @@ app.engine("hbs", hbs.engine({
     defaultLayout: "index.hbs",
 }));
 app.set("view engine", "hbs")
-app.set("views", "./src/views");
+app.set("views", "./public/views");
 app.use("/api/productos-test", productosTestRouter);
 
 /*----------- Session -----------*/

@@ -2,10 +2,32 @@ const { mariaDBOptions } = require("../../config/mariaDB");
 const knex = require("knex")(mariaDBOptions);
 const logger = require("../../config/logger");
 
-class ProductManagement {
+class MariadbDAO {
     constructor() {
         this.products = []; 
     }
+
+    /* MENSAJES */
+
+    async saveMessage(mensaje) {
+        try {
+            console.log("Servicio para guardar mensajes no implmentado para la base de datos seleccionada");
+            return;
+        } catch (error) {
+            logger.error(`Error: ${error}`);
+        }
+    }
+
+    async getMessages() {
+        try {
+            console.log("Servicio para obtener mensajes no implmentado para la base de datos seleccionada");
+            return;
+        } catch (error) {
+            logger.error(`Error: ${error}`);
+        } 
+    }
+
+    /* PRODUCTOS */
 
     async createProductsTableInDataBase() {
         try {
@@ -22,19 +44,20 @@ class ProductManagement {
         }
     }
 
-    async save(product) {
+    async saveProduct(product) {
         try {
             await knex("productos").insert(product);
-            console.log("element inserted");    
+            return;  
         } catch (error) {
             logger.error(error);
         }
     }
 
-    async getAll() {
+    async getProducts() {
         try {
             const products = await knex.select("*").from("productos");
-            return Object.values(JSON.parse(JSON.stringify(products)));    
+            const result = Object.values(JSON.parse(JSON.stringify(products)));
+            return result;
         } catch (error) {
             logger.error(error);
         }
@@ -42,4 +65,4 @@ class ProductManagement {
 
 }
 
-module.exports = { ProductManagement };
+module.exports = MariadbDAO;

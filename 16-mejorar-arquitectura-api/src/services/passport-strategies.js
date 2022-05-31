@@ -3,7 +3,7 @@ const config = require("../config/config");
 const MONGO_URL = config.mongodbRemote.cnxStr;
 const { createHash, isValidPassword } = require("../middlewares/middleware-functions");
 const mongoose = require("mongoose");
-const UsuarioModel = require("../persistencia/contenedores/contenedor-mongodb/models/usuario-model");
+const UsuarioModel = require("../persistencia/DAOs/models/usuario-model");
 
 /*----------- Strategies -----------*/
 const loginStrategy = new LocalStrategy(async (username, password, done) => {

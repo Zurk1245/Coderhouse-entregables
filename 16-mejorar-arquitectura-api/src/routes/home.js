@@ -5,7 +5,7 @@ const { isLogged } = require("../middlewares/middleware-functions");
 const config = require("../config/config");
 const MONGO_URL = config.mongodbRemote.cnxStr;
 
-homeRouter.use(express.static("C:/Users/maria/OneDrive/Escritorio/Coderhouse-entregables/inicio-de-sesion/public"));
+homeRouter.use(express.static("public"));
 
 homeRouter.get("/", isLogged, async (req, res) => {
     try {
