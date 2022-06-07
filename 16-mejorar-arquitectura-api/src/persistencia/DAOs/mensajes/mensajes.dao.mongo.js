@@ -16,16 +16,28 @@ class MongoDbDAO {
     }
 
     async saveMessages(mensaje) {
-        // USAR MENSAJE-DTO
-        let elementoParaAgregar = new MensajeModel(mensaje);
+        const newMessage = new MensajesDTO(mensaje.autor, mensaje.mensaje)
+        let elementoParaAgregar = new MensajeModel(newMessage);
         await elementoParaAgregar.save();
         return elementoParaAgregar;
     }
 
     async getMessages() {
-        // USAR MENSAJE-DTO
         const mensajes = await MensajeModel.find();
-        return mensajes;
+        let mensajesFinales = [];
+        for (let i = 0; i < mensajes.length; i++) {
+            let autor = {
+                id: mensajes[i].autor.id,
+                nombre: mensajes[i].autor.nombre,
+                apellido: mensajes[i].autor.apellido,
+                edad: mensajes[i].autor.edad,
+                alias: mensajes[i].autor.alias,
+                avatar: mensajes[i].autor.avatar
+            }
+            let nuevoProducto = new MensajesDTO(autor, mensajes[i].mensaje);
+            mensajesFinales.push(nuevoProducto);
+        }
+        return mensajesFinales;
     }
 }
 
