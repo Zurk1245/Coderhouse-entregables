@@ -1,4 +1,5 @@
 const MensajeModel = require('../../models/mensaje-model');
+const MensajesDTO = require("../../DTOs/mensajes.dto");
 
 let instance = null;
 
@@ -15,12 +16,14 @@ class MongoDbDAO {
     }
 
     async saveMessages(mensaje) {
+        // USAR MENSAJE-DTO
         let elementoParaAgregar = new MensajeModel(mensaje);
         await elementoParaAgregar.save();
         return elementoParaAgregar;
     }
 
     async getMessages() {
+        // USAR MENSAJE-DTO
         const mensajes = await MensajeModel.find();
         return mensajes;
     }
