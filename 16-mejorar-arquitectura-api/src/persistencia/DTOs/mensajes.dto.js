@@ -34,16 +34,32 @@ class MensajesDTO {
         return this.autor.apellido;
     }
 
+    set apellido(apellido) {
+        this.apellido = apellido;
+    }
+
     get edad() {
         return this.autor.edad;
+    }
+
+    set edad(edad) {
+        this.autor.edad = edad;
     }
 
     get avatar() {
         return this.autor.avatar;
     }
 
+    set avatar(avatar) {
+        this.autor.avatar = avatar;
+    }
+
     get alias() {
         return this.autor.alias;
+    }
+
+    set alias(alias) {
+        this.autor.alias = alias;
     }
 }
 

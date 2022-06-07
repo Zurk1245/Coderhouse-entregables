@@ -1,4 +1,5 @@
 const { mariaDBOptions } = require("../../../config/mariaDB");
+const ProductosDTO = require("../../DTOs/productos.dto");
 const knex = require("knex")(mariaDBOptions);
 
 let instance = null;
@@ -29,13 +30,25 @@ class MariadbDAO {
     }
 
     async saveProduct(product) {
-        const result = await knex(this.tableName).insert(product);
+        const productToSend = new ProductosDTO(product.nombre, product.precio, product.foto);
+        const result = await knex(this.tableName).insert(productToSend);
         return result;
     }
 
     async getProducts() {
         const products = await knex.select("*").from(this.tableName);
-        const result = Object.values(JSON.parse(JSON.stringify(products)));
+        let productosFinales = [];
+        for (let i = 0; i < products.length; i++) {
+            let producto = {
+                nombre: products[i].nombre,
+                precio: products[i].precio,
+                foto: products[i].foto,
+            }
+            let nuevoProducto = new ProductosDTO(producto.nombre, producto.precio, producto.foto);
+            productosFinales.push(nuevoProducto);
+        }
+        
+        const result = Object.values(JSON.parse(JSON.stringify(productosFinales)));
         return result;
     }
 
