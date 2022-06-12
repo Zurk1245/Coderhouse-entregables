@@ -35,6 +35,14 @@ class MongoDbDAO {
         }
         return productosFinales;
     }
+
+    async updateProduct(nombre, updatedProduct) {
+        await ProductoModel.updateOne({nombre: nombre}, updatedProduct);
+    }
+
+    async deleteProduct(nombre) {
+        await ProductoModel.deleteOne({nombre: nombre});
+    }
 }
 
 module.exports = MongoDbDAO;

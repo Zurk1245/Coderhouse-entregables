@@ -1,3 +1,3 @@
-# Consideraciones
+# Testeamos nuestra API REST
 - La persistencia se cambia desde un archivo .env
-- Implementación de patrones para la persistencia: DAO, DTO, Factory, Singleton
+- Para correr las peticiones http con axios correr el comando "npm test" que corre el archivo axios.api.test.js

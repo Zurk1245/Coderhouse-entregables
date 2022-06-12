@@ -1,3 +1,4 @@
+const logger = require("../../../config/logger");
 const { mariaDBOptions } = require("../../../config/mariaDB");
 const ProductosDTO = require("../../DTOs/productos.dto");
 const knex = require("knex")(mariaDBOptions);
@@ -50,6 +51,22 @@ class MariadbDAO {
         
         const result = Object.values(JSON.parse(JSON.stringify(productosFinales)));
         return result;
+    }
+
+    async updateProduct(nombre, updatedProduct) {
+        //await knex.select().from(this.tableName);
+        await knex(this.tableName).where({nombre: nombre}).update(updatedProduct);
+    }
+
+    async deleteProduct(nombre) {
+        try {
+            const response = await knex(this.tableName).where({nombre: nombre}).del();
+            console.log(response.data);
+            console.log(response);
+            return response;   
+        } catch (error) {
+            logger.error(error);
+        }
     }
 
     /**

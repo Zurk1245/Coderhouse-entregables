@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
-    "test": "node ./src/test/autocannon-test.js"
+    "test": "node ./src/test/axios.api.test.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
   "dependencies": {
     "@faker-js/faker": "^6.0.0",
     "autocannon": "^7.8.1",
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
