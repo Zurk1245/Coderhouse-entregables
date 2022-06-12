@@ -71,4 +71,3 @@ async function deleteProduct(productName) {
         logger.error(error);
     }
 })();
-

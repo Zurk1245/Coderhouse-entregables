@@ -4,23 +4,17 @@ const productsDAO = require('../persistencia/DAOs/productos/factory').useDatabas
 
 const getAll = async () => {
     try {
-        
+        const productos = await productsDAO.getProducts();
+        return productos;
     } catch (error) {
         logger.error(error);
     }
-    const productos = await productsDAO.getProducts();
-    /*if (productos.length === 0) {
-        const error = new Error('No hay productos cargados')
-        error.status = 404
-        throw error
-    }*/
-    return productos
 }
 
-const getById = async (id) => {
-    /**TODO: falta implementar*/
+const getById = async (nombre) => {
     try {
-        return 'Método getById product services';
+        const producto = await productsDAO.getProducts(nombre);
+        return producto;
     } catch (error) {
         logger.error(error);
     }

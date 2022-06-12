@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
-    "test": "node ./src/test/axios.api.test.js"
+    "test1": "node ./src/test/axios.api.test.js",
+    "test2": "mocha ./src/test/api.test.js"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +37,9 @@
     "winston": "^3.7.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.3"
   }
 }

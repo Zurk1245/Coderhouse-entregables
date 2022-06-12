@@ -33,10 +33,14 @@ class MariadbDAO {
     async saveProduct(product) {
         const productToSend = new ProductosDTO(product.nombre, product.precio, product.foto);
         const result = await knex(this.tableName).insert(productToSend);
-        return result;
+        return productToSend;
     }
 
-    async getProducts() {
+    async getProducts(productName) {
+        if (productName) {
+            const product = await knex.select("*").from(this.tableName).where({nombre: productName});
+            product ? product : undefined;
+        }
         const products = await knex.select("*").from(this.tableName);
         let productosFinales = [];
         for (let i = 0; i < products.length; i++) {
@@ -54,25 +58,27 @@ class MariadbDAO {
     }
 
     async updateProduct(nombre, updatedProduct) {
-        //await knex.select().from(this.tableName);
-        await knex(this.tableName).where({nombre: nombre}).update(updatedProduct);
+        try {
+            const result = await knex(this.tableName).where({nombre: nombre}).update(updatedProduct);
+            const product = await this.getProducts(nombre);
+            return product;   
+        } catch (error) {
+            logger.log(error);
+        }
     }
 
     async deleteProduct(nombre) {
         try {
-            const response = await knex(this.tableName).where({nombre: nombre}).del();
-            console.log(response.data);
-            console.log(response);
-            return response;   
+            const eliminatedProduct = this.getProducts(productName);
+            console.log("borrandoooooo");
+            console.log(eliminatedProduct);
+            await knex(this.tableName).where({nombre: nombre}).del();
+            eliminatedProduct.eliminated = true;
+            return eliminatedProduct;   
         } catch (error) {
             logger.error(error);
         }
     }
-
-    /**
-     * TODO: Faltan agregar los demás métodos del CRUD
-     */
-
 }
 
 module.exports = MariadbDAO;
