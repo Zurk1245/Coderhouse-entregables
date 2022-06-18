@@ -16,6 +16,7 @@ const logger = require("./config/logger");
 const { conectarMongo } = require('./database/mongo.connection')
 
 const indexRouter = require('./routes/index.routes')
+const GraphQLController = require("./graphql/graphql.controller");
 
 /*============================[Middlewares]============================*/
 app.use(express.json());
@@ -46,6 +47,8 @@ app.use(function (req, res, next) {
 /*----------- Routes -----------*/
 app.use('/', indexRouter)
 app.use(express.static('./public'))
+
+app.use("/graphql", new GraphQLController());
 
 // FAIL ROUTE
 app.get("*", (req, res) => {

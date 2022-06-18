@@ -21,7 +21,11 @@ class MongoDbDAO {
         return productoParaAgregar;
     }
 
-    async getProducts() {
+    async getProducts(nombre) {
+        if (nombre) {
+            const producto = await ProductoModel.find({nombre: nombre});
+            return producto[0];
+        }
         const productos = await ProductoModel.find({});
         let productosFinales = [];
         for (let i = 0; i < productos.length; i++) {
@@ -33,15 +37,20 @@ class MongoDbDAO {
             let nuevoProducto = new ProductosDTO(producto.nombre, producto.precio, producto.foto);
             productosFinales.push(nuevoProducto);
         }
+        console.log(productosFinales);
         return productosFinales;
     }
 
-    async updateProduct(nombre, updatedProduct) {
-        await ProductoModel.updateOne({nombre: nombre}, updatedProduct);
+    async updateProduct(nombre, updatedInfo) {
+        await ProductoModel.updateOne({nombre: nombre}, updatedInfo);
+        const updatedProduct = await ProductoModel.find({nombre: nombre});
+        return updatedProduct;
     }
 
     async deleteProduct(nombre) {
         await ProductoModel.deleteOne({nombre: nombre});
+        const products = await ProductoModel.find({});
+        return products;
     }
 }
 
