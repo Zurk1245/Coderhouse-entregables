@@ -6,7 +6,7 @@ import { createApp, contentTypeFilter, RoutingError } from "https://deno.land/x/
 
 const app = createApp();
 
-let colors: string[] = ["orange", "blue"];
+const colors: string[] = [];
 
 const content = () =>
 	ReactDOMServer.renderToString(
@@ -20,7 +20,7 @@ const content = () =>
                     <label htmlFor="color">Ingrese un color (en inglés)</label>
                     <br />
                     <br />
-                    <input id="color" type="text" />
+                    <input name="color" id="color" type="text" />
                     <br />
                     <br />
                     <input type="submit" value="Send" />
@@ -50,20 +50,17 @@ app.handle("/", async req => {
 });
 
 app.post("/post", async req => {
-        console.log(await req.json());
         const color = (await req.formData()).value("color");
-        console.log(color);
         if (color) {
             colors.push(color);
         }
-        const response = await req.respond({
+        await req.respond({
             status: 200,
             headers: new Headers({
                 "content-type": "text/html; charset=UTF-8",
             }),
             body: content(),
         })   
-        return response;
 })
 
 app.catch(async (e, req) => {
@@ -84,18 +81,9 @@ app.catch(async (e, req) => {
     } else {
       await req.respond({
         status: 500,
-        body: "Internal Server Error",
+        body: "Internal Server Error:" + e + e.body,
       });
     }
   });
 
 app.listen({port: 8080});
-
-
-
-
-/*
-El servidor presentará en su ruta raíz un formulario de ingreso de un color, que será enviado al mismo por método post. Dicho color (en inglés) será incorporado a un array de colores persistido en memoria.
-
-Por debajo del formulario se deberán representar los colores recibidos en una lista desordenada (ul) utilizando el mismo color para la letra en cada caso. El color de fondo del la vista será negro.
-*/
